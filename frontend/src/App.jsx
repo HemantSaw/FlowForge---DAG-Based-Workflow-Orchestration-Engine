@@ -7,7 +7,7 @@ function App() {
   return (
     
     <Routes>
-      <Route path="/workflows" element={<Dashboard />} />
+      <Route path="/" element={<Dashboard />} />
       <Route path="/workflows/:id" element={<WorkflowDetails/>} />
       <Route path="/task-executions/:executionId" element={<TaskExecutionDetails />}/>
     </Routes>
