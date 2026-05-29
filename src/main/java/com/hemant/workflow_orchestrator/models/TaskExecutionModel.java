@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class TaskExecutionModel {
@@ -35,6 +36,7 @@ public class TaskExecutionModel {
 
     @ManyToOne
     @JoinColumn(name = "workflow_execution_id")
+    @JsonIgnore
     private WorkflowExecutionModel workflowExecution;
 
     public TaskExecutionModel() {

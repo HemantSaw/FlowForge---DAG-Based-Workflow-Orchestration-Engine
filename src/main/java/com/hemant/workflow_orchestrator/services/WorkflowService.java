@@ -1,6 +1,9 @@
 package com.hemant.workflow_orchestrator.services;
 import com.hemant.workflow_orchestrator.models.WorkflowModel;
 import com.hemant.workflow_orchestrator.repository.WorkflowRepository;
+
+import jakarta.transaction.Transactional;
+
 import com.hemant.workflow_orchestrator.models.UserModel;
 import com.hemant.workflow_orchestrator.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -31,7 +34,19 @@ public class WorkflowService {
             .orElseThrow(() -> new RuntimeException("User not found with id: " + userId));
     }
 
+    public WorkflowModel getWorkflowByWorkflowId(Long workflowId){
+        return workflowRepository.findById(workflowId)
+            .orElseThrow(() -> new RuntimeException("User not found with id: " + workflowId));
+    }
     public List<WorkflowModel> getAllWorkflows() {
         return workflowRepository.findAll();
+    }
+
+    @Transactional
+    public void deleteWorkflowByWorkflowId(Long workflowId){
+        WorkflowModel workflow = workflowRepository.findById(workflowId)
+            .orElseThrow(() -> new RuntimeException("User not found with id: " + workflowId));
+        workflowRepository.delete(workflow);
+
     }
 }

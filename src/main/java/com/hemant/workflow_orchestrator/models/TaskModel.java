@@ -1,7 +1,9 @@
 package com.hemant.workflow_orchestrator.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -39,7 +41,7 @@ public class TaskModel {
         joinColumns = @JoinColumn(name = "task_id"),
         inverseJoinColumns = @JoinColumn(name = "depends_on_task_id")
     )
-    private List<TaskModel> dependsOn = new ArrayList<>();
+    private Set<TaskModel> dependsOn = new HashSet<>();
 
     // reverse relationship
     @JsonIgnore
@@ -93,11 +95,11 @@ public class TaskModel {
         this.workflow = workflow;
     }
     
-    public List<TaskModel> getDependsOn() {
+    public Set<TaskModel> getDependsOn() {
         return dependsOn;
     }
 
-    public void setDependsOn(List<TaskModel> dependsOn) {
+    public void setDependsOn(Set<TaskModel> dependsOn) {
         this.dependsOn = dependsOn;
     }
 

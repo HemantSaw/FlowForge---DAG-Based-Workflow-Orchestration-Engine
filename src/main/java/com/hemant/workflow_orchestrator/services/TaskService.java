@@ -5,6 +5,8 @@ import com.hemant.workflow_orchestrator.models.WorkflowModel;
 import com.hemant.workflow_orchestrator.repository.TaskRepository;
 import com.hemant.workflow_orchestrator.repository.WorkflowRepository;
 
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,30 +45,76 @@ public class TaskService {
         TaskModel dependsOnTask = taskRepository.findById(dependencyTaskId)
                 .orElseThrow(() -> new RuntimeException("Dependency task not found"));
 
+        if(hasPath(dependsOnTask, task)){
+            throw new CycleDetectedException("Dependency creates a cycle.");
+        }
         task.getDependsOn().add(dependsOnTask);
 
         return taskRepository.save(task);
     }
 
-    public void deleteTask(Long taskId){
+    @Transactional
+    public void deleteTask(Long taskId) {
         TaskModel task = taskRepository.findById(taskId)
-            .orElseThrow(()-> new RuntimeException("Task not found"));
-        List<TaskModel> dependentTasks = taskRepository.findByDependsOnContaining(task);
+            .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        List<TaskModel> updatedDependentTasks = new ArrayList<>();
-        for (TaskModel dependentTask : dependentTasks) {
-
-            dependentTask.getDependsOn().remove(task);
-            updatedDependentTasks.add(dependentTask);
-            // taskRepository.save(dependentTask);
+        // 2. Sever connection with the Parent Workflow
+        if (task.getWorkflow() != null) {
+            task.setWorkflow(null);
         }
-        taskRepository.saveAll(updatedDependentTasks);
 
+        // 3. Clear this task from all other tasks that depend on it
+        // We use the mapped collection directly instead of querying the repository
+        List<TaskModel> dependentTasks = task.getDependentTasks();
+        if (dependentTasks != null && !dependentTasks.isEmpty()) {
+            for (TaskModel dependentTask : dependentTasks) {
+                dependentTask.getDependsOn().remove(task);
+            }
+            // Save updates to clean the inverse side entries out of the join table
+            taskRepository.saveAll(dependentTasks);
+        }
+
+        // 4. Clear this task's own dependencies (Owning Side)
+        task.getDependsOn().clear();
+
+        // 5. Clear its local tracking reference list
+        task.getDependentTasks().clear();
+
+        // 6. FORCE Hibernate to sync relationship removals to PostgreSQL right now
+        taskRepository.flush();
+
+        // 7. Now that the task is completely isolated, delete it safely
         taskRepository.delete(task);
+        
         System.out.println("Task deleted successfully");
     }
 
+    @Transactional
     public void deleteAllTask(){
         taskRepository.deleteAll();
+    }
+
+    private boolean hasPath(TaskModel source, TaskModel target) {
+
+        if(source.getId().equals(
+                target.getId()
+        )) {
+
+            return true;
+        }
+
+        for(TaskModel dependency :
+                source.getDependsOn()) {
+
+            if(hasPath(
+                    dependency,
+                    target
+            )) {
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

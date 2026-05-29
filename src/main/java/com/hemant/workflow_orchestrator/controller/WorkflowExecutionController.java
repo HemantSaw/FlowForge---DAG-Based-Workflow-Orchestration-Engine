@@ -1,6 +1,8 @@
 package com.hemant.workflow_orchestrator.controller;
 
 import com.hemant.workflow_orchestrator.services.WorkflowExecutionService;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,10 +18,11 @@ public class WorkflowExecutionController {
     }
 
     @PostMapping("/workflow/{workflowId}")
-    public String executeWorkflow(@PathVariable Long workflowId) {
+    public ResponseEntity<String> executeWorkflow(@PathVariable Long workflowId) {
 
         workflowExecutionService.executeWorkflow(workflowId);
 
-        return "Workflow execution started asynchronously..";
+        return ResponseEntity.accepted()
+                .body("Workflow execution started");
     }
 }

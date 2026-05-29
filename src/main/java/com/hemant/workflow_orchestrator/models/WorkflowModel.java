@@ -3,6 +3,7 @@ package com.hemant.workflow_orchestrator.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -27,6 +28,7 @@ public class WorkflowModel {
     private String status;
 
     // reverse relationships. task model has foreign key workflow so to mapp it here reverse/
+    // @JsonIgnore
     @OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<TaskModel> tasks = new ArrayList<>();
 

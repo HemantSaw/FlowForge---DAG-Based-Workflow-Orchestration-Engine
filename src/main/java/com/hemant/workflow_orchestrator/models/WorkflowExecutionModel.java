@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class WorkflowExecutionModel {
 
@@ -28,6 +30,7 @@ public class WorkflowExecutionModel {
             cascade = CascadeType.ALL,
             fetch = FetchType.EAGER
     )
+    @JsonIgnore
     private List<TaskExecutionModel> taskExecutions =
             new ArrayList<>();
 
