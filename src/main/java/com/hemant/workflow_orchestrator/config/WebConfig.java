@@ -16,7 +16,8 @@ public void addCorsMappings(
     registry.addMapping("/**")
 
             .allowedOrigins(
-                    "http://localhost:5173"
+                    "http://localhost:5173",
+                    "https://flow-forge-dag-based-workflow-orche.vercel.app"
             )
 
             .allowedMethods(
