@@ -15,20 +15,14 @@ public void addCorsMappings(
 
     registry.addMapping("/**")
 
-            .allowedOrigins(
-                    "http://localhost:5173",
-                    "https://flow-forge-dag-based-workflow-orche.vercel.app"
-            )
+            .allowedOriginPatterns("*")
 
-            .allowedMethods(
-                    "GET",
-                    "POST",
-                    "PUT",
-                    "DELETE",
-                    "OPTIONS"
-            )
+            .allowedMethods("*")
 
-            .allowedHeaders("*");
+            .allowedHeaders("*")
+
+            .allowCredentials(false);
 }
 
 }
+

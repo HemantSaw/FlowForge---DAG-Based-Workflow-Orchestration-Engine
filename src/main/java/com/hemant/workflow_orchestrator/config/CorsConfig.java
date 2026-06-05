@@ -7,34 +7,27 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class CorsConfig {
+public class CorsConfig
+implements WebMvcConfigurer {
 
-    @Bean
-    public CorsFilter corsFilter() {
+@Override
+public void addCorsMappings(
+        CorsRegistry registry
+) {
 
-        CorsConfiguration config =
-                new CorsConfiguration();
+    registry.addMapping("/**")
 
-        config.addAllowedOrigin(
-                "http://localhost:5173"
-        );
+            .allowedOriginPatterns("*")
 
-        config.addAllowedHeader("*");
+            .allowedMethods("*")
 
-        config.addAllowedMethod("*");
+            .allowedHeaders("*")
 
-        config.setAllowCredentials(true);
+            .allowCredentials(false);
+}
 
-        UrlBasedCorsConfigurationSource source =
-                new UrlBasedCorsConfigurationSource();
-
-        source.registerCorsConfiguration(
-                "/**",
-                config
-        );
-
-        return new CorsFilter(source);
-    }
 }
