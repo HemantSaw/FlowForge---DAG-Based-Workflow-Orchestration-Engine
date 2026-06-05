@@ -1,4 +1,4 @@
-import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./pages/Dashboard";
 import{Routes, Route} from 'react-router-dom'
 import WorkflowDetails from "./pages/WorkflowDetails";
 import TaskExecutionDetails from "./components/TaskExecutionDetails";
