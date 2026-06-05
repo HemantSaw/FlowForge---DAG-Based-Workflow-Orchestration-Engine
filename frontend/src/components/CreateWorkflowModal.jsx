@@ -14,7 +14,8 @@ function CreateWorkflowModal({onClose,onWorkflowCreated}) {
 
             const response =
                 await axios.post(
-                    "http://localhost:8080/workflows/user/1",
+                    // "http://localhost:8080/workflows/user/1",
+                    `${import.meta.env.VITE_API_URL}/workflows/user/1`,
                     {
                         name: name,
                         status : "PENDING"

@@ -14,7 +14,8 @@ function AddDependencyModal({tasks,onClose,onDependencyAdded}) {
 
             await axios.post(
 
-                `http://localhost:8080/tasks/${taskId}/depends-on/${dependencyTaskId}`
+                // `http://localhost:8080/tasks/${taskId}/depends-on/${dependencyTaskId}`
+                `${import.meta.env.VITE_API_URL}/tasks/${taskId}/depends-on/${dependencyTaskId}`
 
             );
 

@@ -23,7 +23,8 @@ function TaskExecutionDetails(){
 
             const response =
                 await axios.get(
-                    `http://localhost:8080/task-executions-history/workflow-execution/${executionId}`
+                    // `http://localhost:8080/task-executions-history/workflow-execution/${executionId}`
+                    `${import.meta.env.VITE_API_URL}/task-executions-history/workflow-execution/${executionId}`
                 );
 
             setTaskExecutions(

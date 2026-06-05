@@ -52,7 +52,8 @@ function WorkflowDetails() {
         try {
 
             await axios.delete(
-                `http://localhost:8080/tasks/delete/${taskId}`
+                // `http://localhost:8080/tasks/delete/${taskId}`
+                `${import.meta.env.VITE_API_URL}/tasks/delete/${taskId}`
             );
 
             await getWorkflowDetail();
@@ -65,7 +66,9 @@ function WorkflowDetails() {
     
     const getWorkflowDetail = async()=>{
         try{
-            const response = await axios.get(`http://127.0.0.1:8080/workflows/get-workflow-by-workflowId/${id}`)
+            // const response = await axios.get(`http://127.0.0.1:8080/workflows/get-workflow-by-workflowId/${id}`)
+
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/workflows/get-workflow-by-workflowId/${id}`)
     
             setWorkflow(response.data);
         }
@@ -83,7 +86,8 @@ function WorkflowDetails() {
             setExecuting(true);
 
             await axios.post(
-                `http://localhost:8080/execute/workflow/${id}`
+                // `http://localhost:8080/execute/workflow/${id}`
+                `${import.meta.env.VITE_API_URL}/execute/workflow/${id}`
             );
 
             startPolling();
@@ -102,7 +106,8 @@ function WorkflowDetails() {
 
                 const response =
                     await axios.get(
-                        `http://localhost:8080/workflows/get-workflow-by-workflowId/${id}`
+                        // `http://localhost:8080/workflows/get-workflow-by-workflowId/${id}`
+                        `${import.meta.env.VITE_API_URL}/workflows/get-workflow-by-workflowId/${id}`
                     );
 
                 setWorkflow(response.data);
@@ -131,7 +136,8 @@ function WorkflowDetails() {
 
             const response =
                 await axios.get(
-                    `http://localhost:8080/workflow-executions-history/workflow/${id}`
+                    // `http://localhost:8080/workflow-executions-history/workflow/${id}`
+                    `${import.meta.env.VITE_API_URL}/workflow-executions-history/workflow/${id}`
                 );
 
             setExecutions(

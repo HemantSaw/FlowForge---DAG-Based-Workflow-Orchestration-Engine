@@ -14,7 +14,8 @@ function CreateTaskModal({workflowId, onClose, onTaskCreated}) {
             const response =
                 await axios.post(
 
-                    `http://localhost:8080/tasks/workflow/${workflowId}`,
+                    // `http://localhost:8080/tasks/workflow/${workflowId}`,
+                    `${import.meta.env.VITE_API_URL}/tasks/workflow/${workflowId}`,
 
                     {
                         name,

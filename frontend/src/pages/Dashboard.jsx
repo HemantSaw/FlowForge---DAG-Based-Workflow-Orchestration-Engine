@@ -14,7 +14,8 @@ function Dashboard() {
 
     const fetchWorkflow = async()=>{
         try{
-            const response = await axios.get("http://localhost:8080/workflows");
+            // const response = await axios.get("http://localhost:8080/workflows");
+            const response = await axios.get(`${import.meta.env.VITE_API_URL}/workflows`);
             console.log(response);
             setWorkflows(response.data);
         } catch(error){
@@ -35,7 +36,8 @@ function Dashboard() {
         try {
 
             await axios.delete(
-                `http://localhost:8080/workflows/delete-workflow-by-workflowId/${workflowId}`
+                // `http://localhost:8080/workflows/delete-workflow-by-workflowId/${workflowId}`
+                `${import.meta.env.VITE_API_URL}/workflows/delete-workflow-by-workflowId/${workflowId}`
             );
 
             setWorkflows(
