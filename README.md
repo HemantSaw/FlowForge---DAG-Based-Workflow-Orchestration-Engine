@@ -2,6 +2,12 @@
 
 A DAG-based workflow orchestration engine built using Spring Boot and PostgreSQL that supports asynchronous and parallel task execution with dependency-aware scheduling, retry mechanisms, and failure propagation.
 
+## Live Demo
+
+Frontend - https://flow-forge-dag-based-workflow-orche.vercel.app
+
+Backend - https://flowforge-workflow-orchestrator-engine.onrender.com
+
 ## Features
 
 - DAG-based workflow execution
@@ -26,6 +32,20 @@ A DAG-based workflow orchestration engine built using Spring Boot and PostgreSQL
 - CompletableFuture
 - ThreadPoolTaskExecutor
 - Maven
+
+---
+
+## Core Algorithms & Concepts
+
+### Kahn's Algorithm (Topological Sorting)
+Used for dependency-aware workflow scheduling.
+
+Ensures:
+
+- Correct task ordering
+- DAG traversal
+- Parallel level execution
+- Cycle detection
 
 ---
 
@@ -142,9 +162,52 @@ spring.datasource.password=
 
 ### Run Application
 
+Backend:
+
 ```bash
 ./mvnw spring-boot:run
 ```
+
+Frontend:
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+### Environment Variables
+
+Backend:
+
+```
+SPRING_DATASOURCE_URL=
+SPRING_DATASOURCE_USERNAME=
+SPRING_DATASOURCE_PASSWORD=
+```
+
+Frontend:
+
+```
+VITE_API_URL=
+```
+
+---
+
+## Deployment
+
+### Backend
+
+- Render
+- Docker
+
+### Frontend
+
+- Vercel
+
+### Database
+
+- Neon PostgreSQL
 
 ---
 
@@ -170,3 +233,9 @@ spring.datasource.password=
 - Async programming using CompletableFuture
 - Database concurrency handling
 - Clean backend architecture using SOLID principles
+
+---
+
+## Author
+
+Hemant Saw
